@@ -1,9 +1,10 @@
 	<div id="civicrm-blog-feed">
+		{foreach from=$items item=item}
 		<div class="crm-accordion-wrapper collapsed">
-			<div class="crm-accordion-header">Welkom!</div>
+			<div class="crm-accordion-header">{$item->title}</div>
 			<div class="crm-accordion-body help">
-				<div>Dit is het nieuwe relatiebeheersysteem van de SP.
-					Op deze plek wordt regelmatig relevant nieuws voor gebruikers toegevoegd.</div>
+				{$item->body.und.0.value}
 			</div>
 		</div>
+		{/foreach}
 	</div>
