@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>civicrm/dashlet/spnews</path>
+    <page_callback>CRM_SPDashboard_Page_NewsDashlet</page_callback>
+    <title>NewsDashlet</title>
+    <access_arguments>access CiviCRM</access_arguments>
+  </item>
+    <item>
+        <path>civicrm/dashlet/spsearch</path>
+        <page_callback>CRM_SPDashboard_Page_SearchDashlet</page_callback>
+        <title>SearchDashlet</title>
+        <access_arguments>access CiviCRM</access_arguments>
+    </item>
+</menu>
