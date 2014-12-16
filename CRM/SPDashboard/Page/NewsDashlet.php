@@ -5,7 +5,7 @@ require_once 'CRM/Core/Page.php';
 class CRM_SPDashboard_Page_NewsDashlet extends CRM_Core_Page {
 	function run() {
 
-		// Get latest news items
+		// Get latest news items * DRUPAL ONLY
 		$result = new EntityFieldQuery();
 		$result
 			->entityCondition('entity_type', 'node')

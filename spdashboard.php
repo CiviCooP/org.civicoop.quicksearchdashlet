@@ -6,6 +6,10 @@ require_once 'spdashboard.civix.php';
  * Implementation of hook_civicrm_config
  */
 function spdashboard_civicrm_config(&$config) {
+
+	CRM_Core_Resources::singleton()
+	                  ->addScriptFile('nl.sp.dashboard', 'js/searchdaslet.js', 1011, 'page-footer', FALSE);
+
 	_spdashboard_civix_civicrm_config($config);
 }
 
@@ -24,25 +28,7 @@ function spdashboard_civicrm_xmlMenu(&$files) {
 function spdashboard_civicrm_install() {
 
 	// Create Drupal news node type if necessary
-	if (!node_type_get_type('news')) {
-
-		$type = node_type_set_defaults(array(
-			'type'        => 'news',
-			'name'        => 'Nieuwsitem',
-			'description' => 'Nieuwsitems verschijnen op het CiviCRM-dashboard.',
-			'base'        => 'node_content',
-			'title_label' => 'Titel',
-			'custom'      => true,
-			'comment'     => COMMENT_NODE_CLOSED,
-			'promote'     => NODE_NOT_PROMOTED,
-		));
-
-		node_add_body_field($type, 'Inhoud');
-		$status = node_type_save($type);
-
-		node_types_rebuild();
-		menu_rebuild();
-	}
+	// -> now handled in Drupal module nl.sp.drupal-features
 
 	// Add our dashlets to civicrm_dashboard table
 	$dashlet_data = spdashboard_fetch_dashlets();
