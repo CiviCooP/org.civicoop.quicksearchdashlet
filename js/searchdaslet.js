@@ -110,7 +110,6 @@ cj(function ($) {
             } else {
 
                 var phone = communic.replace(/[^0-9]/g, '');
-                console.log(phone);
                 CRM.api3('Phone', 'Get', {
                     phone_numeric: phone,
                     sequential: 1
