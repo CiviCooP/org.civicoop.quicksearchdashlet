@@ -7,6 +7,7 @@ cj(function ($) {
         console.log(contacts);
 
         $('#spqs-spinner').hide();
+        $("#spqs-form input").val('');
 
         if (contacts.length > 0) {
 
