@@ -4,7 +4,7 @@ cj(function ($) {
 
     function spqsShowResults(contacts) {
 
-        console.log(contacts);
+        // console.log(contacts);
 
         $('#spqs-spinner').hide();
         $("#spqs-form input").val('');
@@ -82,9 +82,10 @@ cj(function ($) {
                 street_number: streetno,
                 sequential: 1
             }).success(function (data) {
-
                 // Then get contacts for these addresses
-                if (data.count > 0) {
+                if(data.is_error)
+                    spqsShowError(data.error_message);
+                else if (data.count > 0) {
                     spqsGetContactsFromRecords(data.values);
                 } else {
                     spqsShowResults([]);
@@ -102,7 +103,12 @@ cj(function ($) {
                     email: communic,
                     sequential: 1
                 }).success(function (data) {
-                    spqsGetContactsFromRecords(data.values);
+                    if(data.is_error)
+                        spqsShowError(data.error_message);
+                    else if(data.count > 0)
+                        spqsGetContactsFromRecords(data.values);
+                    else
+                        spqsShowResults([]);
                 }).error(function () {
                     spqsShowError();
                 });
@@ -114,7 +120,12 @@ cj(function ($) {
                     phone_numeric: phone,
                     sequential: 1
                 }).success(function (data) {
-                    spqsGetContactsFromRecords(data.values);
+                    if(data.is_error)
+                        spqsShowError(data.error_message);
+                    else if(data.count > 0)
+                        spqsGetContactsFromRecords(data.values);
+                    else
+                        spqsShowResults([]);
                 }).error(function () {
                     spqsShowError();
                 });
@@ -130,7 +141,10 @@ cj(function ($) {
                 'city': city,
                 sequential: 1
             }).success(function (data) {
-                spqsShowResults(data.values);
+                if(data.is_error)
+                    spqsShowError(data.error_message);
+                else
+                    spqsShowResults(data.values);
             }).error(function () {
                 spqsShowError();
             });
