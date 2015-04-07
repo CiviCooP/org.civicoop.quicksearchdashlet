@@ -41,14 +41,17 @@ cj(function ($) {
 
     function spqsGetContactsFromRecords(records) {
 
+        // console.log(records);
+
         var ids = [];
         cj.each(records, function (index, rec) {
             ids.push(rec.contact_id);
         });
 
         CRM.api3('Contact', 'Get', {
-            contact_id: ids,
-            sequential: 1
+            contact_id: { 'IN': ids },
+            sequential: 1,
+            debug: 1
         }).success(function (data) {
             spqsShowResults(data.values);
         }).error(function () {
