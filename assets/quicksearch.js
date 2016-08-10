@@ -1,13 +1,13 @@
-/* SP Search Dashlet */
+/* org.civicoop.quicksearchdashlet JS */
 
 cj(function ($) {
 
-    function spqsShowResults(contacts) {
+    function qsdashletShowResults(contacts) {
 
         // console.log(contacts);
 
-        $('#spqs-spinner').hide();
-        $("#spqs-form input").val('');
+        $('#qsdashlet-spinner').hide();
+        $("#qsdashlet-form input").val('');
 
         if (contacts.length > 0) {
 
@@ -16,30 +16,30 @@ cj(function ($) {
 
                 var url = CRM.url('civicrm/contact/view', {reset: 1, cid: contact.contact_id });
                 var tr = $('<tr>');
-                $('<td class="spqs-id"><a href="' + url + '">' + contact.contact_id + '</a></td>').appendTo(tr);
-                $('<td class="spqs-name"><a href="' + url + '">' + contact.display_name + '</a></td>').appendTo(tr);
-                $('<td class="spqs-address">' + contact.street_address + '</td>').appendTo(tr);
-                $('<td class="spqs-postcode">' + contact.postal_code + '</td>').appendTo(tr);
-                $('<td class="spqs-city>">' + contact.city + '</td>').appendTo(tr);
-                $('<td class="spqs-phone">' + contact.phone + '</td>').appendTo(tr);
-                $('<td class="spqs-email">' + (contact.email ? '<a href="mailto:' + contact.email + '">' + contact.email + '</a>' : '') + '</td>').appendTo(tr);
+                $('<td class="qsdashlet-id"><a href="' + url + '">' + contact.contact_id + '</a></td>').appendTo(tr);
+                $('<td class="qsdashlet-name"><a href="' + url + '">' + contact.display_name + '</a></td>').appendTo(tr);
+                $('<td class="qsdashlet-address">' + contact.street_address + '</td>').appendTo(tr);
+                $('<td class="qsdashlet-postcode">' + contact.postal_code + '</td>').appendTo(tr);
+                $('<td class="qsdashlet-city>">' + contact.city + '</td>').appendTo(tr);
+                $('<td class="qsdashlet-phone">' + contact.phone + '</td>').appendTo(tr);
+                $('<td class="qsdashlet-email">' + (contact.email ? '<a href="mailto:' + contact.email + '">' + contact.email + '</a>' : '') + '</td>').appendTo(tr);
                 tr.appendTo(table);
 
             });
-            $('#spqs-results').show().html('').append(table);
+            $('#qsdashlet-results').show().html('').append(table);
 
 
         } else {
 
-            $('#spqs-results').show().html('<p>Geen resultaten.</p>');
+            $('#qsdashlet-results').show().html('<p>Geen resultaten.</p>');
         }
     }
 
-    function spqsShowError() {
-        CRM.alert('Er is een fout opgetreden bij het ophalen van de zoekresultaten.');
+    function qsdashletShowError() {
+        CRM.alert('An error occurred while fetching search results.');
     }
 
-    function spqsGetContactsFromRecords(records) {
+    function qsdashletGetContactsFromRecords(records) {
 
         // console.log(records);
 
@@ -53,23 +53,23 @@ cj(function ($) {
             sequential: 1,
             debug: 1
         }).success(function (data) {
-            spqsShowResults(data.values);
+            qsdashletShowResults(data.values);
         }).error(function () {
-            spqsShowError();
+            qsdashletShowError();
         });
     }
 
-    function spqsPerformSearch() {
+    function qsdashletPerformSearch() {
 
-        $('#spqs-results').hide();
-        $('#spqs-spinner').show();
+        $('#qsdashlet-results').hide();
+        $('#qsdashlet-spinner').show();
 
-        var id = $('#spqs-id').val();
-        var postcode = $('#spqs-postcode').val();
-        var streetno = $('#spqs-streetno').val();
-        var name = $('#spqs-name').val();
-        var city = $('#spqs-city').val();
-        var communic = $('#spqs-communic').val();
+        var id = $('#qsdashlet-id').val();
+        var postcode = $('#qsdashlet-postcode').val();
+        var streetno = $('#qsdashlet-streetno').val();
+        var name = $('#qsdashlet-name').val();
+        var city = $('#qsdashlet-city').val();
+        var communic = $('#qsdashlet-communic').val();
 
         postcode = postcode.toUpperCase();
         if(postcode && postcode.match(/[0-9]{4}[A-Z]{2}/)) {
@@ -79,7 +79,6 @@ cj(function ($) {
         if (postcode && streetno) {
 
             // Get Address by postal code and street no
-
             CRM.api3('Address', 'Get', {
                 postal_code: postcode,
                 street_number: streetno,
@@ -87,14 +86,14 @@ cj(function ($) {
             }).success(function (data) {
                 // Then get contacts for these addresses
                 if(data.is_error)
-                    spqsShowError(data.error_message);
+                    qsdashletShowError(data.error_message);
                 else if (data.count > 0) {
-                    spqsGetContactsFromRecords(data.values);
+                    qsdashletGetContactsFromRecords(data.values);
                 } else {
-                    spqsShowResults([]);
+                    qsdashletShowResults([]);
                 }
             }).error(function () {
-                spqsShowError();
+                qsdashletShowError();
             });
 
         } else if (communic) {
@@ -107,13 +106,13 @@ cj(function ($) {
                     sequential: 1
                 }).success(function (data) {
                     if(data.is_error)
-                        spqsShowError(data.error_message);
+                        qsdashletShowError(data.error_message);
                     else if(data.count > 0)
-                        spqsGetContactsFromRecords(data.values);
+                        qsdashletGetContactsFromRecords(data.values);
                     else
-                        spqsShowResults([]);
+                        qsdashletShowResults([]);
                 }).error(function () {
-                    spqsShowError();
+                    qsdashletShowError();
                 });
 
             } else {
@@ -124,13 +123,13 @@ cj(function ($) {
                     sequential: 1
                 }).success(function (data) {
                     if(data.is_error)
-                        spqsShowError(data.error_message);
+                        qsdashletShowError(data.error_message);
                     else if(data.count > 0)
-                        spqsGetContactsFromRecords(data.values);
+                        qsdashletGetContactsFromRecords(data.values);
                     else
-                        spqsShowResults([]);
+                        qsdashletShowResults([]);
                 }).error(function () {
-                    spqsShowError();
+                    qsdashletShowError();
                 });
             }
 
@@ -145,29 +144,29 @@ cj(function ($) {
                 sequential: 1
             }).success(function (data) {
                 if(data.is_error)
-                    spqsShowError(data.error_message);
+                    qsdashletShowError(data.error_message);
                 else
-                    spqsShowResults(data.values);
+                    qsdashletShowResults(data.values);
             }).error(function () {
-                spqsShowError();
+                qsdashletShowError();
             });
         }
     }
 
-    $('#civicrm-dashboard').on('keyup', '#spqs-form input', function (ev) {
+    $('#civicrm-dashboard').on('keyup', '#qsdashlet-form input', function (ev) {
 
         // Perform search on enter
         if (ev.keyCode == 13) {
-            spqsPerformSearch();
+            qsdashletPerformSearch();
         }
         // Clear other field groups
         else {
-            $("#spqs-form input").not('*[data-group=' + $(this).attr('data-group') + ']').val('');
+            $("#qsdashlet-form input").not('*[data-group=' + $(this).attr('data-group') + ']').val('');
         }
     });
 
-    $('#civicrm-dashboard').on('submit', '#spqs-form', function (ev) {
-        spqsPerformSearch();
+    $('#civicrm-dashboard').on('submit', '#qsdashlet-form', function (ev) {
+        qsdashletPerformSearch();
     });
 
 });

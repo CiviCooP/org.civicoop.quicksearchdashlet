@@ -5,7 +5,7 @@
 /**
  * (Delegated) Implementation of hook_civicrm_config
  */
-function _spdashboard_civix_civicrm_config(&$config = NULL) {
+function _quicksearchdashlet_civix_civicrm_config(&$config = NULL) {
   static $configured = FALSE;
   if ($configured) return;
   $configured = TRUE;
@@ -30,8 +30,8 @@ function _spdashboard_civix_civicrm_config(&$config = NULL) {
  *
  * @param $files array(string)
  */
-function _spdashboard_civix_civicrm_xmlMenu(&$files) {
-  foreach (_spdashboard_civix_glob(__DIR__ . '/xml/Menu/*.xml') as $file) {
+function _quicksearchdashlet_civix_civicrm_xmlMenu(&$files) {
+  foreach (_quicksearchdashlet_civix_glob(__DIR__ . '/xml/Menu/*.xml') as $file) {
     $files[] = $file;
   }
 }
@@ -39,9 +39,9 @@ function _spdashboard_civix_civicrm_xmlMenu(&$files) {
 /**
  * Implementation of hook_civicrm_install
  */
-function _spdashboard_civix_civicrm_install() {
-  _spdashboard_civix_civicrm_config();
-  if ($upgrader = _spdashboard_civix_upgrader()) {
+function _quicksearchdashlet_civix_civicrm_install() {
+  _quicksearchdashlet_civix_civicrm_config();
+  if ($upgrader = _quicksearchdashlet_civix_upgrader()) {
     return $upgrader->onInstall();
   }
 }
@@ -49,9 +49,9 @@ function _spdashboard_civix_civicrm_install() {
 /**
  * Implementation of hook_civicrm_uninstall
  */
-function _spdashboard_civix_civicrm_uninstall() {
-  _spdashboard_civix_civicrm_config();
-  if ($upgrader = _spdashboard_civix_upgrader()) {
+function _quicksearchdashlet_civix_civicrm_uninstall() {
+  _quicksearchdashlet_civix_civicrm_config();
+  if ($upgrader = _quicksearchdashlet_civix_upgrader()) {
     return $upgrader->onUninstall();
   }
 }
@@ -59,9 +59,9 @@ function _spdashboard_civix_civicrm_uninstall() {
 /**
  * (Delegated) Implementation of hook_civicrm_enable
  */
-function _spdashboard_civix_civicrm_enable() {
-  _spdashboard_civix_civicrm_config();
-  if ($upgrader = _spdashboard_civix_upgrader()) {
+function _quicksearchdashlet_civix_civicrm_enable() {
+  _quicksearchdashlet_civix_civicrm_config();
+  if ($upgrader = _quicksearchdashlet_civix_upgrader()) {
     if (is_callable(array($upgrader, 'onEnable'))) {
       return $upgrader->onEnable();
     }
@@ -71,9 +71,9 @@ function _spdashboard_civix_civicrm_enable() {
 /**
  * (Delegated) Implementation of hook_civicrm_disable
  */
-function _spdashboard_civix_civicrm_disable() {
-  _spdashboard_civix_civicrm_config();
-  if ($upgrader = _spdashboard_civix_upgrader()) {
+function _quicksearchdashlet_civix_civicrm_disable() {
+  _quicksearchdashlet_civix_civicrm_config();
+  if ($upgrader = _quicksearchdashlet_civix_upgrader()) {
     if (is_callable(array($upgrader, 'onDisable'))) {
       return $upgrader->onDisable();
     }
@@ -89,17 +89,17 @@ function _spdashboard_civix_civicrm_disable() {
  * @return mixed  based on op. for 'check', returns array(boolean) (TRUE if upgrades are pending)
  *                for 'enqueue', returns void
  */
-function _spdashboard_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
-  if ($upgrader = _spdashboard_civix_upgrader()) {
+function _quicksearchdashlet_civix_civicrm_upgrade($op, CRM_Queue_Queue $queue = NULL) {
+  if ($upgrader = _quicksearchdashlet_civix_upgrader()) {
     return $upgrader->onUpgrade($op, $queue);
   }
 }
 
-function _spdashboard_civix_upgrader() {
-  if (!file_exists(__DIR__.'/CRM/spdashboard/Upgrader.php')) {
+function _quicksearchdashlet_civix_upgrader() {
+  if (!file_exists(__DIR__.'/CRM/QuickSearchDashlet/Upgrader.php')) {
     return NULL;
   } else {
-    return CRM_spdashboard_Upgrader_Base::instance();
+    return CRM_QuickSearchDashlet_Upgrader_Base::instance();
   }
 }
 
@@ -113,7 +113,7 @@ function _spdashboard_civix_upgrader() {
  * @param $pattern string, glob pattern, eg "*.txt"
  * @return array(string)
  */
-function _spdashboard_civix_find_files($dir, $pattern) {
+function _quicksearchdashlet_civix_find_files($dir, $pattern) {
   if (is_callable(array('CRM_Utils_File', 'findFiles'))) {
     return CRM_Utils_File::findFiles($dir, $pattern);
   }
@@ -122,7 +122,7 @@ function _spdashboard_civix_find_files($dir, $pattern) {
   $result = array();
   while (!empty($todos)) {
     $subdir = array_shift($todos);
-    foreach (_spdashboard_civix_glob("$subdir/$pattern") as $match) {
+    foreach (_quicksearchdashlet_civix_glob("$subdir/$pattern") as $match) {
       if (!is_dir($match)) {
         $result[] = $match;
       }
@@ -145,13 +145,13 @@ function _spdashboard_civix_find_files($dir, $pattern) {
  *
  * Find any *.mgd.php files, merge their content, and return.
  */
-function _spdashboard_civix_civicrm_managed(&$entities) {
-  $mgdFiles = _spdashboard_civix_find_files(__DIR__, '*.mgd.php');
+function _quicksearchdashlet_civix_civicrm_managed(&$entities) {
+  $mgdFiles = _quicksearchdashlet_civix_find_files(__DIR__, '*.mgd.php');
   foreach ($mgdFiles as $file) {
     $es = include $file;
     foreach ($es as $e) {
       if (empty($e['module'])) {
-        $e['module'] = 'nl.sp.spdashboard';
+        $e['module'] = 'org.civicoop.quicksearchdashlet';
       }
       $entities[] = $e;
     }
@@ -165,12 +165,12 @@ function _spdashboard_civix_civicrm_managed(&$entities) {
  *
  * Note: This hook only runs in CiviCRM 4.4+.
  */
-function _spdashboard_civix_civicrm_caseTypes(&$caseTypes) {
+function _quicksearchdashlet_civix_civicrm_caseTypes(&$caseTypes) {
   if (!is_dir(__DIR__ . '/xml/case')) {
     return;
   }
 
-  foreach (_spdashboard_civix_glob(__DIR__ . '/xml/case/*.xml') as $file) {
+  foreach (_quicksearchdashlet_civix_glob(__DIR__ . '/xml/case/*.xml') as $file) {
     $name = preg_replace('/\.xml$/', '', basename($file));
     if ($name != CRM_Case_XMLProcessor::mungeCaseType($name)) {
       $errorMessage = sprintf("Case-type file name is malformed (%s vs %s)", $name, CRM_Case_XMLProcessor::mungeCaseType($name));
@@ -178,7 +178,7 @@ function _spdashboard_civix_civicrm_caseTypes(&$caseTypes) {
       // throw new CRM_Core_Exception($errorMessage);
     }
     $caseTypes[$name] = array(
-      'module' => 'nl.sp.spdashboard',
+      'module' => 'org.civicoop.quicksearchdashlet',
       'name' => $name,
       'file' => $file,
     );
@@ -197,7 +197,7 @@ function _spdashboard_civix_civicrm_caseTypes(&$caseTypes) {
  * @param string $pattern
  * @return array, possibly empty
  */
-function _spdashboard_civix_glob($pattern) {
+function _quicksearchdashlet_civix_glob($pattern) {
   $result = glob($pattern);
   return is_array($result) ? $result : array();
 }
@@ -210,7 +210,7 @@ function _spdashboard_civix_glob($pattern) {
  * $item - menu you need to insert (parent/child attributes will be filled for you)
  * $parentId - used internally to recurse in the menu structure
  */
-function _spdashboard_civix_insert_navigation_menu(&$menu, $path, $item, $parentId = NULL) {
+function _quicksearchdashlet_civix_insert_navigation_menu(&$menu, $path, $item, $parentId = NULL) {
   static $navId;
 
   // If we are done going down the path, insert menu
@@ -234,7 +234,7 @@ function _spdashboard_civix_insert_navigation_menu(&$menu, $path, $item, $parent
     foreach ($menu as $key => &$entry) {
       if ($entry['attributes']['name'] == $first) {
         if (!$entry['child']) $entry['child'] = array();
-        $found = _spdashboard_civix_insert_navigation_menu($entry['child'], implode('/', $path), $item, $key);
+        $found = _quicksearchdashlet_civix_insert_navigation_menu($entry['child'], implode('/', $path), $item, $key);
       }
     }
     return $found;

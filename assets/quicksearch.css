@@ -1,0 +1,65 @@
+/* org.civicoop.quicksearchdashlet CSS */
+
+.crm-container #qsdashlet-form input {
+    border: 1px solid #bbb;
+    background: none !important;
+    padding: 3px 3px !important;
+    font-size: 0.85em;
+}
+
+.crm-container #qsdashlet-form input:focus {
+    border: 1px solid #222;
+}
+
+.crm-container #qsdashlet-id, .crm-container #qsdashlet-streetno {
+    width: 75px !important;
+    margin-right: 7px;
+}
+
+.crm-container #qsdashlet-name, .crm-container #qsdashlet-postcode, .crm-container #qsdashlet-city, .crm-container #qsdashlet-communic {
+    width: 90px !important;
+}
+
+.crm-container #qsdashlet-city {
+    margin-right: 7px;
+}
+
+.crm-container #qsdashlet-spinner {
+    display: none;
+    width: 100%;
+    height: 80px;
+    background: url('spinner.gif') center 30px no-repeat;
+}
+
+.crm-container #qsdashlet-results {
+    display: none;
+    min-height: 50px;
+}
+
+.crm-container #qsdashlet-results p {
+    text-align: center;
+    font-style: italic;
+    margin-top: 20px;
+}
+
+.crm-container #qsdashlet-results table {
+    border: 0;
+    margin: 10px 0 15px 0;
+    font-size: 12px;
+    font-size: 0.75rem;
+    line-height: 14px;
+    line-height: 0.9rem;
+}
+
+.crm-container #qsdashlet-results tr {
+    height: 0.9rem;
+    overflow: hidden;
+    white-space: nowrap
+}
+.crm-container tr td {
+    overflow: visible !important;
+}
+
+.crm-container #qsdashlet-results td.spqs-id {
+    align: right;
+}
