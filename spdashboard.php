@@ -2,6 +2,18 @@
 
 require_once 'spdashboard.civix.php';
 
+function spdashboard_civicrm_dashboard_defaults($availableDashlets, &$defaultDashlets){
+  $contactID = CRM_Core_Session::singleton()->get('userID');
+	unset($defaultDashlets['getting-started']);
+  unset($defaultDashlets['blog']);
+  $defaultDashlets['spsearch'] = array(
+    'dashboard_id' => $availableDashlets['spsearch']['id'],
+    'is_active' => 1,
+    'column_no' => '0',
+    'contact_id' => $contactID,
+  );
+}
+
 /**
  * Implementation of hook_civicrm_config
  */
