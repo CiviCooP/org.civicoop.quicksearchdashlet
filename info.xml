@@ -8,12 +8,11 @@
     <author>Kevin Levie</author>
     <email>kevin.levie@civicoop.org</email>
   </maintainer>
-  <releaseDate>2014-01-06</releaseDate>
-  <version>1.1</version>
-  <develStage>beta</develStage>
+  <releaseDate>2016-09-06</releaseDate>
+  <version>1.2</version>
+  <develStage>stable</develStage>
   <compatibility>
     <ver>4.6</ver>
-    <ver>4.7</ver>
   </compatibility>
   <comments>Adds a quick search widget that can be added to the CiviCRM Dashboard. Search results are fetched using ajax and shown below the search fields. This extension is generally available but was developed for specific customer installations.</comments>
   <civix>
