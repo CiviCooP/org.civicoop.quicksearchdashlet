@@ -82,6 +82,18 @@ function quicksearchdashlet_civicrm_caseTypes(&$caseTypes) {
 	_quicksearchdashlet_civix_civicrm_caseTypes($caseTypes);
 }
 
+function quicksearchdashlet_civicrm_dashboard_defaults($availableDashlets, &$defaultDashlets){
+  $contactID = CRM_Core_Session::singleton()->get('userID');
+  unset($defaultDashlets['getting-started']);
+  unset($defaultDashlets['blog']);
+  $defaultDashlets['spsearch'] = array(
+    'dashboard_id' => $availableDashlets['spsearch']['id'],
+    'is_active' => 1,
+    'column_no' => '0',
+    'contact_id' => $contactID,
+  );
+}
+
 /**
  * Function to fetch dashlets (used in the hooks above)
  */
