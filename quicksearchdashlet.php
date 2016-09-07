@@ -84,13 +84,12 @@ function quicksearchdashlet_civicrm_caseTypes(&$caseTypes) {
 
 function quicksearchdashlet_civicrm_dashboard_defaults($availableDashlets, &$defaultDashlets){
   $contactID = CRM_Core_Session::singleton()->get('userID');
-  var_dump($availableDashlets); exit();
-  /*$defaultDashlets['quicksearch'] = array(
+  $defaultDashlets['quicksearch'] = array(
     'dashboard_id' => $availableDashlets['quicksearch']['id'],
     'is_active' => 1,
     'column_no' => '0',
     'contact_id' => $contactID,
-  );*/
+  );
 }
 
 /**
