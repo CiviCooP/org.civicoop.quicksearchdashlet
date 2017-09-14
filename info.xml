@@ -8,8 +8,8 @@
     <author>Kevin Levie</author>
     <email>kevin.levie@civicoop.org</email>
   </maintainer>
-  <releaseDate>2016-09-10</releaseDate>
-  <version>1.5.1</version>
+  <releaseDate>2017-09-12</releaseDate>
+  <version>1.5.2</version>
   <develStage>stable</develStage>
   <compatibility>
     <ver>4.6</ver>

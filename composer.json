@@ -1,0 +1,12 @@
+{
+  "name": "civicoop/org.civicoop.quicksearchdashlet",
+  "description": "Quicksearch Widget for the CiviCRM Dashboard",
+  "type": "civicrm-module",
+  "authors": [
+    {
+      "name": "Kevin Levie",
+      "email": "kevin.levie@civicoop.org"
+    }
+  ],
+  "license": "AGPL-3.0"
+}
